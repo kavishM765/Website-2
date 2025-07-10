@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<script>
+    function redirectToDetails(userType) {
+        document.getElementById('landingPage').style.display = 'none';
+    
+        if (userType === 'user') {
+            document.getElementById('userDetails').style.display = 'block';
+        } else if (userType === 'driver') {
+            document.getElementById('driverLogin').style.display = 'block';
+        }
+    }
+    
+    function loginUser(userType) {
+        if (userType === 'user') {
+            const userName = document.getElementById('userName').value;
+            const userPhoneNumber = document.getElementById('userPhoneNumber').value;
+            const userLocation = document.getElementById('userLocation').value;
+            const userGmail = document.getElementById('userGmail').value;
+         // Placeholder validation logic
+         if (userName && userPhoneNumber && userLocation  && userGmail) {
+                document.getElementById('statusMessage').textContent = `Welcome, ${userName}!`;
+                document.getElementById('sosPage').style.display = 'block';
+            } else {
+                document.getElementById('statusMessage').textContent = 'Please fill out all fields.';
+               
+            }
+        } else if (userType === 'driver') {
+            const driverName = document.getElementById('driverName').value;
+            const driverPhoneNumber = document.getElementById('driverPhoneNumber').value;
+            const driverLocation = document.getElementById('driverLocation').value;
+            const ambulanceNumber = document.getElementById('ambulanceNumber').value;
+    
+            // Placeholder validation logic
+            if (driverName && driverPhoneNumber && driverLocation && ambulanceNumber) {
+                document.getElementById('statusMessage').textContent = `Welcome, ${driverName}!`;
+                document.getElementById('sosPage').style.display = 'block';
+            } else {
+                document.getElementById('statusMessage').textContent = 'Please fill out all fields.';
+            }
+        }
+    }
+    
+    // Additions to hide irrelevant sections on initial load
+    document.getElementById('mainContent').style.display = 'none';
+    document.getElementById('sosPage').style.display = 'none';
+    document.getElementById('sosResponsePage').style.display = 'none';
+    document.getElementById('hospitalDetailsPage').style.display = 'none';
+    document.getElementById('medicationFarmPage').style.display = 'none';
+    
+    function sosButton() {
+        document.getElementById('mainContent').style.display = 'none';
+        document.getElementById('sosPage').style.display = 'block';
+    }
+    
+    function handleSOSResponse(response) {
+        document.getElementById('sosPage').style.display = 'none';
+        document.getElementById('sosResponsePage').style.display = 'block';
+    
+        if (response === 'accept') {
+            // Handle SOS acceptance logic
+            document.getElementById('sosResponsePage').innerHTML = '<h2>Help is accepted by a driver</h2>' +
+           
+            '<p>Driver Details:</p>' +
+                '<ul>' +
+                '<li>Name:Naveen</li>' +
+                '<li>Phone Number: 9865372637</li>' +
+                '<li>Aumbulance no: TN6001ATN</li>' +
+                '<li>Location:<a href="https://maps.app.goo.gl/yBzV4hzeoQSBPCsY6">location</a></li>' +
+                '</ul>' +
+                '<button onclick="goBack(\'mainContent\')">Back</button>';
+        } else if (response === 'deny') {
+            // Handle SOS denial logic
+            document.getElementById('sosResponsePage').innerHTML = '<h2>SOS is denied</h2>' +
+                '<button onclick="goBack(\'mainContent\')">Back</button>';
+        }
+    }
+    
+    function hospitalDetailsButton() {
+        document.getElementById('mainContent').style.display = 'none';
+        document.getElementById('hospitalDetailsPage').style.display = 'block';
+    }
+    
+    function medicationFarmButton() {
+        document.getElementById('mainContent').style.display = 'none';
+        document.getElementById('medicationFarmPage').style.display = 'block';
+    }
+    
+    function goBack(pageId) {
+        document.getElementById(pageId).style.display = 'block';
+        document.getElementById('sosPage').style.display = 'none';
+        document.getElementById('sosResponsePage').style.display = 'none';
+        document.getElementById('hospitalDetailsPage').style.display = 'none';
+        document.getElementById('medicationFarmPage').style.display = 'none';
+    }
+    </script>
+           
+    <link rel="stylesheet" href="./j.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Emergency SOS App</title>
+</head>
+<body>
+
+<div class="app-container">
+    <img src="kmj4.jpg" width="50px"><h1>Emergency SOS App</h1>
+
+    <!-- Landing Page -->
+    <div id="landingPage">
+        <h2>Welcome to our sos app</h2>
+        <h3>Are you a driver or a user?</h3>
+        <br><img src="user logo.webp" width="100px"><br>
+        
+         <br><button onclick="redirectToDetails('user')">User</button><br>
+        <br><img src="driver logo.jpg" width="100px"><br>
+        <br><button onclick="redirectToDetails('driver')">Driver</button><br>
+        
+    </div>
+
+    <!-- User Details Page -->
+    <div id="userDetails" class="details-form">
+        <h2>User Details</h2>
+        <form id="userDetailsForm">
+            <label for="userName">Name:</label>
+            <input type="text" id="userName" required>
+
+            <label for="userPhoneNumber">Phone Number:</label>
+            <input type="tel" id="userPhoneNumber" required>
+
+            <label for="userLocation">Current Location:</label>
+            <input type="text" id="userLocation" required>
+
+             <label for="userGmail">Gmail Account:</label>
+            <input type="email" id="userGmail" required>
+            
+            <button type="button" onclick="loginUser('user')">Login</button>
+            <center>We  will access your location</center> 
+            <center>This details will not be used for other purpose</center>
+            </form>
+        </div>
+
+    <!-- Driver Login Page -->
+    <div id="driverLogin" class="details-form">
+        <h2>Driver Login</h2>
+        <form id="driverLoginForm">
+            <label for="driverName">Name:</label>
+            <input type="text" id="driverName" required>
+
+            <label for="driverPhoneNumber">Phone Number:</label>
+            <input type="tel" id="driverPhoneNumber" required>
+
+            <label for="driverLocation">Location:</label>
+            <input type="text" id="driverLocation" required>
+
+            <label for="ambulanceNumber">Ambulance Number:</label>
+            <input type="text" id="ambulanceNumber" required>
+
+            <button type="button" onclick="loginUser('driver')">Login</button>
+        </form>
+    </div>
+
+    <!-- Main Page with Buttons -->
+    <div id="mainContent">
+        <p id="statusMessage"></p>
+        <div class="button-container">
+            <button id="sosButton" onclick="sosButton()">SOS</button>
+            <button id="hospitalDetailsButton" onclick="hospitalDetailsButton()">Hospital Details</button>
+            <button id="SpecialTreatmentButton" onclick="medicationFarmButton()">SPECIAL Treatment</button>
+        </div>
+    </div>
+
+    <!-- SOS Page -->
+    <div id="sosPage">
+        <h2>Help Sent!</h2>
+        <center>
+        <table border="1">
+            <tr>
+                <td>Name</td> <td>Phone number</td> <td>Location</td>
+            </tr>
+
+            <tr>
+                <td>Kavin</td> <td>9876543212</td> <td><a href="https://maps.app.goo.gl/yBzV4hzeoQSBPCsY6">location/a></td>
+                </tr>
+                </table>
+            </center>
+                <br><button onclick="handleSOSResponse('accept')">Accept</button><br>
+        <button onclick="handleSOSResponse('deny')">Deny</button>
+    </div>
+
+    <!-- SOS Response Page -->
+    <div id="sosResponsePage">
+        <!-- Content for SOS Response will be dynamically generated -->
+        <button onclick="goBack('mainContent')">Back</button>
+    </div>
+
+    <!-- Hospital Details Page -->
+    <div id="hospitalDetailsPage">
+        <h2>Hospital Details</h2>
+        <p>Default Hospital Names and Phone Numbers:</p>
+        <ul>
+            <li>DHR Hospital : 123-456-7890:COIMBATURE:<a href="https://maps.app.goo.gl/yBzV4hzeoQSBPCsY6">location DHR</a></li>
+            <br><li>MHR Hospital : 987-654-3210:VIRUDHUNAGAR :<a href="https://maps.app.goo.gl/yBzV4hzeoQSBPCsY6">location MHR</a></li><br>
+            <li>Nhr hospital : 0987654562 : madurai :<a href="https://maps.app.goo.gl/yBzV4hzeoQSBPCsY6">location Nhr</a></li> 
+        </ul>
+        <button onclick="goBack('mainContent')">Back</button> 
+       </div>
+
+    <!-- Medication Farm Page -->
+    <div id="medicationFarmPage">
+        <center>
+        <h2>facilities provided by the hospital</h2>
+        <ul>
+            <table border="1">
+            <tr>
+               <td> <h3>Hospital provides you the good care</h3></tr>
+            </tr>
+            
+            <tr>
+                <td><pa>We will provide this for free in our hospital</pa></td>
+            </tr>
+            
+            <tr>    
+                <td><li>New eye transform</li></td>
+            </tr>
+            
+            <tr>
+                <td><li>Eye checkup</li></td>
+            </tr>
+                
+            <tr>
+                 <td><li>Medical checkup and its medicen</li><td>
+            </tr>
+                 
+            <tr>
+                 <td><li>Regular or new admit will be provided with good care and with discount for some checkups</li>
+            </tr>
+            
+            <tr>
+                <td><li>Blood Pressure Test</li></td>
+            </tr>
+            
+            <tr>
+                <td><li>Blood Sugar test</li>
+             </td>       
+        </table>
+    </center>
+    </ul>
+        <button onclick="goBack('mainContent')">Back</button>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
+
+
